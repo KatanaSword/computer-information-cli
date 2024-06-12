@@ -44,6 +44,22 @@ def memory_info():
     print(f"Used: {get_size(swap.used)}")
     print(f"Percentage: {swap.percent} %")
 
+def storage_info():
+    partitions = psutil.disk_partitions()
+    print(f"\n{"*"*30} Storage {"*"*30}")
+    for partition in partitions:
+        print(f"\nDevice: {partition.device}")
+        print(f"Partition Mount point: {partition.mountpoint}")
+        print(f"Partition File system type:: {partition.fstype}")
+        try:
+            partition_usage = psutil.disk_usage(partition.mountpoint)
+        except PermissionError:
+            continue
+        print(f"Total size: {get_size(partition_usage.total)}")
+        print(f"Used space: {get_size(partition_usage.used)}")
+        print(f"Free space: {get_size(partition_usage.free)}")
+        print(f"Used percentage: {partition_usage.percent} %")
+
 def main():
     while True:
         print("\n1. Know Computer System.")
