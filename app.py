@@ -19,9 +19,6 @@ def system_info():
     print(f"Release: {sys.release}")
     print(f"Version: {sys.version}")
     print(f"Machine: {sys.machine}")
-    print(f"Processor: {sys.processor}")
-    print(f"Physical core: ", psutil.cpu_count(logical=False))
-    print(f"Total core: ", psutil.cpu_count(logical=True))
 
     cup_freq = psutil.cpu_freq()
     print(f"\n{"*"*30} CPU Frequencies {"*"*30}")
@@ -60,14 +57,19 @@ def storage_info():
         print(f"Free space: {get_size(partition_usage.free)}")
         print(f"Used percentage: {partition_usage.percent} %")
 
+def cpu_info():
+    cpu = platform.uname()
+    print(f"\n{"*"*30} CPU {"*"*30}")
+    print(f"Processor: {cpu.processor}")
+    print(f"Physical core: ", psutil.cpu_count(logical=False))
+    print(f"Total core: ", psutil.cpu_count(logical=True))
+
 def main():
     while True:
         print("\n1. Know Computer System.")
         print("2. Know Computer CPU.")
-        print("3. Know Computer Network.")
-        print("4. Know Computer GPU.")
-        print("5. Know About Virtual Memory.")
-        print("6. Know About Storage.")
+        print("3. Know About Virtual Memory.")
+        print("4. Know About Storage.")
         print("0. Exit App")
         choose = input("\nEnter a number to learn more about computer: ")
 
@@ -76,12 +78,8 @@ def main():
         elif choose == "2":
             cpu_info()
         elif choose == "3":
-            network_info()
-        elif choose == "4":
-            gpu_info()
-        elif choose == "5":
             memory_info()
-        elif choose == "6":
+        elif choose == "4":
             storage_info()
         elif choose == "0":
             break
